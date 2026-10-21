@@ -280,7 +280,7 @@
     const subject = encodeURIComponent(`Opportunity for ${profile.name}`);
     const to = encodeURIComponent(profile.email || "");
     const greeting = encodeURIComponent(
-      `Hi ${profile.shortName || profile.name}, I saw your portfolio and would like to talk about an opportunity.`
+      `Hi ${profile.shortName || profile.name}, I came across your portfolio and would like to discuss a software engineering opportunity with you.`
     );
     const phoneDigits = (profile.phone || "").replace(/\D/g, "");
     const emailOptions = [
