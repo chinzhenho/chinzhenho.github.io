@@ -480,7 +480,17 @@
       // malformed hash: just clean the address
     }
     history.replaceState(null, "", cleanAddress());
-    if (target) goToSection(target, false); // content is already built at this point
+    if (!target) return;
+    goToSection(target, false); // content is already built at this point
+
+    // The web font can finish loading after this jump and shift the text above it slightly.
+    // Re-align once fonts are ready, unless the visitor has already started scrolling.
+    let userMoved = false;
+    const stop = () => (userMoved = true);
+    for (const type of ["wheel", "touchstart", "keydown", "mousedown"]) window.addEventListener(type, stop, { once: true, passive: true });
+    document.fonts?.ready.then(() => {
+      if (!userMoved) goToSection(target, false);
+    });
   }
 
   /* ============================== 5. Start-up ============================== */
