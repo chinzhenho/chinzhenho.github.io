@@ -442,16 +442,45 @@
     }
   }
 
-  /** Opening a link like ".../#work": jump there once the page content has been built. */
+  /** Address without any "#section" part, e.g. "https://chinzhenho.github.io/". */
+  const cleanAddress = () => location.pathname + location.search;
+
+  /** Scrolls to a section and moves keyboard focus there, without adding "#..." to the address. */
+  function goToSection(target, smooth) {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ behavior: smooth && !reduceMotion ? "smooth" : "instant", block: "start" });
+    // Let keyboard and screen-reader users continue from the section they jumped to
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  }
+
+  /** In-page links (navbar, buttons, "Back to top") scroll smoothly and keep the address clean. */
+  function setupInPageLinks() {
+    document.addEventListener("click", (e) => {
+      const link = e.target.closest('a[href^="#"]');
+      // Let the browser handle Ctrl/Cmd/Shift-clicks (open in new tab, etc.)
+      if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const target = document.getElementById(link.getAttribute("href").slice(1));
+      if (!target) return;
+      e.preventDefault();
+      goToSection(target, true);
+    });
+  }
+
+  /**
+   * Opening an older shared link like ".../#work": jump there once the page content
+   * has been built, then tidy the address back to plain "chinzhenho.github.io".
+   */
   function scrollToHash() {
     if (!location.hash) return;
     let target = null;
     try {
       target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
     } catch {
-      return; // malformed hash, ignore
+      // malformed hash: just clean the address
     }
-    if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: "instant", block: "start" }));
+    history.replaceState(null, "", cleanAddress());
+    if (target) goToSection(target, false); // content is already built at this point
   }
 
   /* ============================== 5. Start-up ============================== */
@@ -532,5 +561,6 @@
   run("email menu", setupEmailMenu);
   run("copy buttons", setupCopyButtons);
   run("scroll effects", setupScrollEffects);
+  run("in-page links", setupInPageLinks);
   run("scroll to #section", scrollToHash);
 })();
