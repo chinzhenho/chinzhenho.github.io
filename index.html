@@ -1,67 +1,157 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>你的名字 · 作品集</title>
-  <meta name="description" content="個人作品集：專案、技能與聯絡方式" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <!-- Security: only load scripts, styles and images from this site (plus Google Fonts). Blocks injected scripts. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <title>Chin Zhen Ho · Software Engineer Portfolio</title>
+  <meta name="description" content="Graduate Software Engineer portfolio of Chin Zhen Ho, featuring machine learning, AI-powered web applications, Java backend development and automated testing projects." />
+  <link rel="canonical" href="https://chinzhenho.github.io/" />
+  <meta name="theme-color" content="#2563eb" />
+
+  <!-- Preview card when the link is shared on WhatsApp, LinkedIn, etc. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Chin Zhen Ho · Software Engineer Portfolio" />
+  <meta property="og:description" content="Graduate software engineer: full-stack web and machine learning. Three live projects you can try." />
+  <meta property="og:url" content="https://chinzhenho.github.io/" />
+  <meta property="og:image" content="https://chinzhenho.github.io/images/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Chin Zhen Ho, Graduate Software Engineer: CommentInsight, EatHealthee and Joinlist" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='32' y='42' font-family='Arial' font-size='26' font-weight='700' fill='white' text-anchor='middle'%3ECZ%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <a class="skip-link" href="#work">Skip to projects</a>
+  <noscript>
+    <p class="noscript">This site needs JavaScript to show its content. You can still see my code on <a href="https://github.com/chinzhenho">GitHub</a>.</p>
+  </noscript>
+
   <header class="nav">
     <div class="container nav-inner">
-      <a href="#top" class="logo" id="nav-name">你的名字</a>
-      <nav class="nav-links">
-        <a href="#projects">作品</a>
-        <a href="#about">關於我</a>
-        <a href="#contact">聯絡</a>
+      <a href="#top" class="logo" id="nav-name"></a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="#work">Main projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#more-projects">More projects</a>
+        <a href="#about">About</a>
+        <a class="nav-cta" href="#contact">Hire me</a>
       </nav>
     </div>
   </header>
 
   <main id="top">
-    <!-- 個人介紹 -->
-    <section class="hero container">
-      <p class="eyebrow" id="hero-role">前端工程師 / 設計師</p>
-      <h1 id="hero-name">你好，我是 你的名字</h1>
-      <p class="hero-intro" id="hero-intro">一段簡短的自我介紹。</p>
-      <div class="hero-actions" id="hero-actions"></div>
-    </section>
-
-    <!-- 作品 -->
-    <section id="projects" class="section container">
-      <div class="section-head">
-        <h2>作品集</h2>
-        <div class="filters" id="filters" role="tablist" aria-label="篩選作品"></div>
+    <!-- Hero (white) -->
+    <section class="hero-wrap" aria-label="Introduction">
+      <div class="hero container">
+        <p class="status"><span class="dot" aria-hidden="true"></span><span id="hero-status-text"></span></p>
+        <p class="eyebrow" id="hero-name"></p>
+        <h1 id="hero-headline"></h1>
+        <p class="hero-intro" id="hero-intro"></p>
+        <div class="hero-actions" id="hero-actions"></div>
+        <ul class="proof" id="hero-proof"></ul>
       </div>
-      <div class="grid" id="project-grid"></div>
     </section>
 
-    <!-- 關於我 -->
-    <section id="about" class="section container about">
-      <h2>關於我</h2>
-      <div class="about-grid">
-        <p id="about-text"></p>
-        <div>
-          <h3>技能</h3>
-          <ul class="skills" id="skills"></ul>
+    <!-- Featured work (tinted) -->
+    <section id="work" class="section section--alt">
+      <div class="container">
+        <div class="section-title">
+          <span class="kicker">01 · Main projects</span>
+          <h2>Built, tested and online</h2>
+          <p class="section-desc">Three apps I built, tested and put online. You can try each one yourself.</p>
+        </div>
+        <div class="featured" id="featured-list"></div>
+      </div>
+    </section>
+
+    <!-- Experience (white) -->
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="section-title">
+          <span class="kicker">02 · Experience</span>
+          <h2>Where I've worked</h2>
+          <p class="section-desc">My IT internship and part-time work.</p>
+        </div>
+        <div class="timeline" id="experience-list"></div>
+      </div>
+    </section>
+
+    <!-- More projects (tinted) -->
+    <section id="more-projects" class="section section--alt">
+      <div class="container">
+        <div class="section-title">
+          <span class="kicker">03 · More projects</span>
+          <h2>Academic projects</h2>
+          <p class="section-desc">Projects from my university coursework. The code is on GitHub.</p>
+        </div>
+        <div class="grid" id="project-grid"></div>
+      </div>
+    </section>
+
+    <!-- About (white) -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="about-top">
+          <div class="avatar" id="avatar"></div>
+          <div>
+            <span class="kicker">04 · About me</span>
+            <h2 id="about-heading"></h2>
+            <p class="about-text" id="about-text"></p>
+          </div>
+        </div>
+
+        <div class="principles" id="principles"></div>
+
+        <div class="about-grid">
+          <div>
+            <h3>Education</h3>
+            <div class="edu" id="education-list"></div>
+            <h3 class="sub">Languages</h3>
+            <ul class="skills" id="languages"></ul>
+          </div>
+          <div>
+            <h3>Skills</h3>
+            <div id="skills"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section id="contact" class="section section--contact">
+      <div class="container">
+        <div class="cta">
+          <span class="kicker light">Let's talk</span>
+          <h2>Hiring a software engineer?</h2>
+          <p id="cta-text"></p>
+          <div class="contact-cards" id="contact-cards"></div>
+          <div class="cta-actions" id="cta-actions"></div>
+          <p class="cta-note" id="cta-note"></p>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- 聯絡 -->
-  <footer id="contact" class="footer">
-    <div class="container">
-      <h2>一起合作吧</h2>
-      <p>歡迎透過以下方式聯絡我。</p>
-      <div class="contact-links" id="contact-links"></div>
-      <p class="copyright" id="copyright"></p>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span id="copyright"></span>
+      <a href="#top">Back to top ↑</a>
     </div>
   </footer>
+
+  <!-- Mobile sticky contact button -->
+  <a class="float-cta" id="float-cta" href="#contact">Contact me</a>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="projects.js"></script>
   <script src="script.js"></script>
